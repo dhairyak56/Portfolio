@@ -421,8 +421,57 @@
                 height: 150px !important;
             }
         }
+
+        /* Button Fixes for Hero Section */
+
+        @media (max-width: 768px) {
+
+            /* Fix the button layout in hero section */
+            header .flex.space-x-4 {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 1rem !important;
+                margin-top: 2rem !important;
+                width: 100% !important;
+                align-items: center !important;
+            }
+
+            /* Remove the space-x class effect since we're stacking */
+            header .flex.space-x-4>* {
+                margin-left: 0 !important;
+            }
+
+            /* Style individual buttons */
+            header .flex.space-x-4 a {
+                display: block !important;
+                width: 80% !important;
+                max-width: 250px !important;
+                text-align: center !important;
+                padding: 0.75rem 1rem !important;
+                font-size: 1rem !important;
+            }
+
+            /* Fix button border radius */
+            header .flex.space-x-4 a.rounded-full {
+                border-radius: 9999px !important;
+            }
+
+            /* Add a bit more margin at the bottom of the hero section */
+            header.bg-primary {
+                padding-bottom: 4rem !important;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 375px) {
+            header .flex.space-x-4 a {
+                width: 90% !important;
+                font-size: 0.9rem !important;
+            }
+        }
     </style>
 </head>
+
 <body class="bg-gray-50 font-sans">
     <!-- Navigation -->
     <nav class="bg-white shadow-md py-4 sticky top-0 z-50">
@@ -910,45 +959,45 @@
                 </div>
 </body>
 <script>
-// Add this script at the end of your body section
+    // Add this script at the end of your body section
 
-// Fix for mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    
-    // Toggle mobile menu
-    mobileMenuButton.addEventListener('click', function() {
-        if (mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.remove('hidden');
-        } else {
-            mobileMenu.classList.add('hidden');
-        }
-    });
-    
-    // Close mobile menu when clicking menu items
-    const mobileMenuItems = mobileMenu.querySelectorAll('a');
-    mobileMenuItems.forEach(item => {
-        item.addEventListener('click', function() {
-            mobileMenu.classList.add('hidden');
+    // Fix for mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function () {
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        // Toggle mobile menu
+        mobileMenuButton.addEventListener('click', function () {
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+            } else {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+
+        // Close mobile menu when clicking menu items
+        const mobileMenuItems = mobileMenu.querySelectorAll('a');
+        mobileMenuItems.forEach(item => {
+            item.addEventListener('click', function () {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Fix for dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        darkModeToggle.addEventListener('click', function () {
+            document.body.classList.toggle('dark-mode');
+
+            // Toggle icon
+            const icon = darkModeToggle.querySelector('i');
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
         });
     });
-    
-    // Fix for dark mode toggle
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    darkModeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('dark-mode');
-        
-        // Toggle icon
-        const icon = darkModeToggle.querySelector('i');
-        if (document.body.classList.contains('dark-mode')) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
-    });
-});
 
 </script>
