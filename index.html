@@ -469,53 +469,6 @@
                 font-size: 0.9rem !important;
             }
         }
-
-        /* Fix for timeline center line in Chrome */
-
-        /* Override the timeline center line positioning or hide it completely */
-        @media screen and (-webkit-min-device-pixel-ratio:0) {
-
-            /* This targets Chrome specifically */
-            .timeline-container::after {
-                /* Option 1: Hide the line completely */
-                display: none !important;
-
-                /* Option 2 (alternative): Make it very light if you want to keep it */
-                /* background-color: rgba(229, 231, 235, 0.2) !important; */
-                /* width: 1px !important; */
-            }
-
-            /* Additional fixes for Chrome's rendering of timeline items */
-            .timeline-item {
-                position: relative !important;
-                border-left: none !important;
-                border-right: none !important;
-            }
-
-            /* Fix for timeline dots in Chrome */
-            .timeline-item::after {
-                box-shadow: 0 0 0 4px #1E40AF !important;
-                background-color: white !important;
-            }
-        }
-
-        /* Fix for all browsers to ensure consistent timeline appearance */
-        .timeline-container {
-            position: relative !important;
-            overflow: hidden !important;
-        }
-
-        /* Improve timeline appearance on mobile in all browsers */
-        @media (max-width: 768px) {
-            .timeline-container {
-                margin-left: 10px !important;
-            }
-
-            .timeline-item {
-                width: calc(100% - 20px) !important;
-                margin-bottom: 30px !important;
-            }
-        }
     </style>
 </head>
 
