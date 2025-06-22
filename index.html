@@ -4,31 +4,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Dhairya Kandhari - Software Developer</title>
+    <title>Dhairya Kandhari - Software Engineer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        .bg-primary {
-            background-color: #1E40AF;
+        :root {
+            --primary-color: #0F172A;
+            --secondary-color: #1E293B;
+            --accent-color: #3B82F6;
+            --accent-hover: #2563EB;
+            --text-light: #94A3B8;
+            --text-dark: #F8FAFC;
+            --bg-dark: #0F172A;
+            --bg-card: #1E293B;
+            --border-color: #334155;
         }
 
-        .text-primary {
-            color: #1E40AF;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .border-primary {
-            border-color: #1E40AF;
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+            overflow-x: hidden;
         }
 
-        .timeline-container {
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Navigation */
+        .nav-wrapper {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-wrapper.scrolled {
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-link {
+            color: var(--text-light);
             position: relative;
+            transition: color 0.3s ease;
+            font-weight: 500;
         }
 
-        .timeline-container::after {
+        .nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--secondary-color) 100%);
+            overflow: hidden;
+        }
+
+        .hero-bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: 
+                radial-gradient(circle at 20% 80%, var(--accent-color) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, var(--accent-color) 0%, transparent 50%);
+        }
+
+        /* Code background animation */
+        .code-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.03;
+        }
+
+        .code-line {
+            position: absolute;
+            white-space: nowrap;
+            color: var(--accent-color);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            animation: float-code 20s linear infinite;
+        }
+
+        @keyframes float-code {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Terminal window style */
+        .terminal-window {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border-color);
+            font-family: 'Courier New', monospace;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .terminal-content {
+            color: #0f0;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .terminal-prompt {
+            color: #0f0;
+            margin-right: 0.5rem;
+        }
+
+        /* Code snippet decoration */
+        .code-decoration {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: var(--accent-color);
+            opacity: 0.1;
+            font-size: 12px;
+            pointer-events: none;
+        }
+
+        .typing-wrapper {
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .typing-text {
+            display: inline-block;
+            animation: typing 3s steps(40) 1s 1 normal both,
+                       blink 900ms steps(40) infinite normal;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid var(--accent-color);
+            max-width: fit-content;
+        }
+
+        @keyframes typing {
+            from { 
+                width: 0;
+            }
+            to { 
+                width: 38ch; /* Adjust based on actual character count */
+            }
+        }
+
+        @keyframes blink {
+            from { border-right-color: var(--accent-color); }
+            to { border-right-color: transparent; }
+        }
+
+        /* Cards */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-color);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
             content: '';
             position: absolute;
             width: 2px;
-            background-color: #e5e7eb;
+            background: var(--border-color);
             top: 0;
             bottom: 0;
             left: 50%;
@@ -36,9 +263,9 @@
         }
 
         .timeline-item {
+            padding: 1rem 0;
             position: relative;
             width: 50%;
-            padding: 20px 40px;
         }
 
         .timeline-item::after {
@@ -46,31 +273,141 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: white;
-            border: 4px solid #1E40AF;
-            top: 15px;
+            background: var(--accent-color);
+            border: 4px solid var(--bg-dark);
+            top: 50%;
+            transform: translateY(-50%);
             border-radius: 50%;
             z-index: 1;
         }
 
         .timeline-left {
             left: 0;
-        }
-
-        .timeline-right {
-            left: 50%;
+            padding-right: 3rem;
+            text-align: right;
         }
 
         .timeline-left::after {
             right: -10px;
         }
 
+        .timeline-right {
+            left: 50%;
+            padding-left: 3rem;
+        }
+
         .timeline-right::after {
             left: -10px;
         }
 
+        /* Skills */
+        .skill-tag {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 999px;
+            color: var(--accent-color);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--accent-color);
+            color: var(--text-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Projects */
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(15, 23, 42, 0.9) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-color);
+            padding: 0.75rem 2rem;
+            border-radius: 999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            border: 2px solid var(--accent-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Styles */
         @media (max-width: 768px) {
-            .timeline-container::after {
+            .timeline::before {
                 left: 31px;
             }
 
@@ -84,487 +421,216 @@
                 left: 21px;
             }
 
+            .timeline-left,
+            .timeline-right {
+                left: 0;
+                text-align: left;
+            }
+
             .timeline-left::after,
             .timeline-right::after {
                 left: 21px;
             }
 
-            .timeline-right {
-                left: 0%;
+            .hero-section {
+                padding: 2rem 1rem;
+            }
+
+            .typing-wrapper {
+                height: 60px;
             }
         }
 
-        .project-card {
+        /* Section spacing */
+        section {
+            padding: 5rem 0;
+        }
+
+        /* Contact form */
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-dark);
             transition: all 0.3s ease;
         }
 
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .skill-tag {
-            background-color: rgba(30, 64, 175, 0.1);
-            color: #1E40AF;
-            border-radius: 9999px;
-            padding: 0.25rem 0.75rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            display: inline-block;
-            margin: 0.25rem;
-            transition: all 0.3s ease;
+        /* Mobile menu */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--secondary-color);
+            transition: right 0.3s ease;
+            z-index: 1001;
+            overflow-y: auto;
         }
 
-        .skill-tag:hover {
-            background-color: #1E40AF;
-            color: white;
+        .mobile-menu.active {
+            right: 0;
         }
 
-        /* Animations */
-        .fade-in {
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .slide-up {
-            animation: slideUp 0.8s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Progress bar styles */
-        .progress-bar {
-            height: 8px;
-            background-color: #e5e7eb;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-
-        .progress {
-            height: 100%;
-            background-color: #1E40AF;
-            border-radius: 4px;
-            transition: width 1.5s ease;
-        }
-
-        /* Typewriter effect */
-        .typewriter {
-            overflow: hidden;
-            border-right: .15em solid #1E40AF;
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: .15em;
-            animation:
-                typing 3.5s steps(40, end),
-                blink-caret .75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from {
-                width: 0
-            }
-
-            to {
-                width: 100%
-            }
-        }
-
-        @keyframes blink-caret {
-
-            from,
-            to {
-                border-color: transparent
-            }
-
-            50% {
-                border-color: #1E40AF;
-            }
-        }
-
-        /* Project gallery */
-        .gallery-container {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .gallery-item {
-            position: absolute;
+        .menu-overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: rgba(0, 0, 0, 0.5);
             opacity: 0;
-            transition: opacity 0.5s ease;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
         }
 
-        .gallery-item.active {
+        .menu-overlay.active {
             opacity: 1;
-        }
-
-        /* Dark mode toggle */
-        .dark-mode {
-            background-color: #1a202c;
-            color: #e2e8f0;
-        }
-
-        .dark-mode .bg-white {
-            background-color: #2d3748;
-        }
-
-        .dark-mode .text-gray-700,
-        .dark-mode .text-gray-800,
-        .dark-mode .text-gray-900 {
-            color: #e2e8f0;
-        }
-
-        .dark-mode .text-gray-600 {
-            color: #cbd5e0;
-        }
-
-        .dark-mode .border-gray-300 {
-            border-color: #4a5568;
-        }
-
-        .dark-mode .bg-gray-50 {
-            background-color: #1a202c;
-        }
-
-        /* Mobile Responsiveness Fixes for Portfolio Website */
-
-        /* Add these styles to the existing <style> section in your index.html */
-
-        /* Fix image display on mobile */
-        @media (max-width: 768px) {
-
-            /* Fix the profile picture container size */
-            #about .w-64.h-64 {
-                width: 200px !important;
-                height: 200px !important;
-            }
-
-            /* Fix project card images */
-            .project-card .h-48 {
-                height: 200px !important;
-            }
-
-            /* Ensure skill tags wrap properly */
-            .skill-tag {
-                margin: 0.25rem !important;
-                white-space: nowrap;
-            }
-
-            /* Fix spacing in timeline items */
-            .timeline-item {
-                padding: 20px 20px 20px 70px !important;
-            }
-
-            /* Adjust contact form layout */
-            #contact form input,
-            #contact form textarea {
-                padding: 0.75rem !important;
-            }
-
-            /* Fix header section on mobile */
-            header.bg-primary {
-                padding: 3rem 1rem !important;
-            }
-
-            /* Typwriter animation fix for mobile */
-            .typewriter {
-                white-space: normal !important;
-                border-right: none !important;
-                letter-spacing: normal !important;
-                animation: none !important;
-            }
-
-            /* Fix section paddings */
-            section {
-                padding: 3rem 1rem !important;
-            }
-
-            /* Improve text readability on mobile */
-            h1 {
-                font-size: 2.5rem !important;
-            }
-
-            h2 {
-                font-size: 2rem !important;
-                margin-bottom: 2rem !important;
-            }
-
-            h3 {
-                font-size: 1.25rem !important;
-            }
-
-            /* Adjust the project cards layout */
-            .project-card {
-                margin-bottom: 2rem !important;
-            }
-
-            /* Fix the contact section layout */
-            #contact .flex.flex-col.md\\:flex-row {
-                gap: 2rem !important;
-            }
-
-            /* Fix mobile menu display */
-            #mobile-menu {
-                max-height: 100vh !important;
-                overflow-y: auto !important;
-            }
-
-            /* Add spacing to timeline items */
-            .timeline-item .bg-white.p-6 {
-                padding: 1rem !important;
-            }
-
-            /* Fix skills section layout */
-            #skills .grid {
-                gap: 1rem !important;
-            }
-
-            /* Fix the experience timeline alignment */
-            .timeline-container::after {
-                left: 20px !important;
-            }
-
-            /* Fix mobile display for skill tag containers */
-            #skills .flex.flex-wrap {
-                justify-content: flex-start !important;
-            }
-
-            /* Fix contact icons alignment */
-            #contact .flex.items-start {
-                align-items: center !important;
-            }
-
-            /* Fix the hero section heading and subtext */
-            header .text-4xl.md\\:text-6xl {
-                font-size: 2.5rem !important;
-                line-height: 1.2 !important;
-                margin-bottom: 1rem !important;
-            }
-
-            /* Fix the typing text container height */
-            header .h-8.overflow-hidden {
-                height: auto !important;
-                overflow: visible !important;
-                margin-bottom: 1.5rem !important;
-            }
-
-            /* Fix the button layout in hero section */
-            header .flex.space-x-4 {
-                flex-direction: column !important;
-                align-items: center !important;
-            }
-
-            header .flex.space-x-4 a {
-                width: 100% !important;
-                max-width: 200px !important;
-                text-align: center !important;
-            }
-        }
-
-        /* Fix very small screens (under 375px) */
-        @media (max-width: 375px) {
-
-            /* Further reduce font sizes */
-            h1 {
-                font-size: 2rem !important;
-            }
-
-            h2 {
-                font-size: 1.75rem !important;
-            }
-
-            h3 {
-                font-size: 1.25rem !important;
-            }
-
-            /* Adjust profile picture size */
-            #about .w-64.h-64 {
-                width: 150px !important;
-                height: 150px !important;
-            }
-
-            /* Reduce padding in all sections */
-            section {
-                padding: 2rem 0.75rem !important;
-            }
-
-            /* Fix container padding */
-            .container {
-                padding-left: 0.75rem !important;
-                padding-right: 0.75rem !important;
-            }
-
-            /* Fix project gallery */
-            .project-card .h-48 {
-                height: 150px !important;
-            }
-        }
-
-        /* Button Fixes for Hero Section */
-
-        @media (max-width: 768px) {
-
-            /* Fix the button layout in hero section */
-            header .flex.space-x-4 {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 1rem !important;
-                margin-top: 2rem !important;
-                width: 100% !important;
-                align-items: center !important;
-            }
-
-            /* Remove the space-x class effect since we're stacking */
-            header .flex.space-x-4>* {
-                margin-left: 0 !important;
-            }
-
-            /* Style individual buttons */
-            header .flex.space-x-4 a {
-                display: block !important;
-                width: 80% !important;
-                max-width: 250px !important;
-                text-align: center !important;
-                padding: 0.75rem 1rem !important;
-                font-size: 1rem !important;
-            }
-
-            /* Fix button border radius */
-            header .flex.space-x-4 a.rounded-full {
-                border-radius: 9999px !important;
-            }
-
-            /* Add a bit more margin at the bottom of the hero section */
-            header.bg-primary {
-                padding-bottom: 4rem !important;
-            }
-        }
-
-        /* Extra small devices */
-        @media (max-width: 375px) {
-            header .flex.space-x-4 a {
-                width: 90% !important;
-                font-size: 0.9rem !important;
-            }
+            visibility: visible;
         }
     </style>
 </head>
 
-<body class="bg-gray-50 font-sans">
+<body>
     <!-- Navigation -->
-    <nav class="bg-white shadow-md py-4 sticky top-0 z-50">
-        <div class="container mx-auto px-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-primary">DK</a>
-            <div class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-600 hover:text-primary transition duration-300">About</a>
-                <a href="#experience" class="text-gray-600 hover:text-primary transition duration-300">Experience</a>
-                <a href="#projects" class="text-gray-600 hover:text-primary transition duration-300">Projects</a>
-                <a href="#education" class="text-gray-600 hover:text-primary transition duration-300">Education</a>
-                <a href="#skills" class="text-gray-600 hover:text-primary transition duration-300">Skills</a>
-                <a href="#contact" class="text-gray-600 hover:text-primary transition duration-300">Contact</a>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button id="darkModeToggle" class="text-gray-600 hover:text-primary transition duration-300">
-                    <i class="fas fa-moon"></i>
+    <nav class="nav-wrapper">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="text-2xl font-bold text-white">
+                    <span class="text-accent-color">&lt;</span>DK<span class="text-accent-color">/&gt;</span>
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#experience" class="nav-link">Experience</a>
+                    <a href="#projects" class="nav-link">Projects</a>
+                    <a href="#skills" class="nav-link">Skills</a>
+                    <a href="#education" class="nav-link">Education</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-xl"></i>
                 </button>
-                <button class="md:hidden text-gray-600" id="mobile-menu-button">
-                    <i class="fas fa-bars fa-lg"></i>
-                </button>
-            </div>
-        </div>
-        <div class="md:hidden hidden bg-white py-2 shadow-inner" id="mobile-menu">
-            <div class="container mx-auto px-4 flex flex-col space-y-3">
-                <a href="#about" class="text-gray-600 hover:text-primary py-1 transition duration-300">About</a>
-                <a href="#experience"
-                    class="text-gray-600 hover:text-primary py-1 transition duration-300">Experience</a>
-                <a href="#projects" class="text-gray-600 hover:text-primary py-1 transition duration-300">Projects</a>
-                <a href="#education" class="text-gray-600 hover:text-primary py-1 transition duration-300">Education</a>
-                <a href="#skills" class="text-gray-600 hover:text-primary py-1 transition duration-300">Skills</a>
-                <a href="#contact" class="text-gray-600 hover:text-primary py-1 transition duration-300">Contact</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="bg-primary text-white py-20 md:py-32">
-        <div class="container mx-auto px-4 flex flex-col items-center text-center">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4 fade-in">Dhairya Kandhari</h1>
-            <div class="h-8 overflow-hidden">
-                <p id="typingText" class="text-xl md:text-2xl mb-8 typewriter">Software Developer | Computer Science
-                    Student</p>
+    <!-- Mobile Menu -->
+    <div class="menu-overlay" id="menu-overlay"></div>
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-xl font-bold">Menu</h3>
+                <button id="close-menu" class="text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
             </div>
-            <div class="flex space-x-4 mt-8 slide-up">
-                <a href="#contact"
-                    class="bg-white text-primary px-6 py-3 rounded-full font-bold hover:bg-gray-100 transition duration-300 transform hover:scale-105">Get
-                    in Touch</a>
-                <a href="#projects"
-                    class="border-2 border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-primary transition duration-300 transform hover:scale-105">View
-                    Projects</a>
+            <div class="flex flex-col space-y-4">
+                <a href="#about" class="nav-link text-lg">About</a>
+                <a href="#experience" class="nav-link text-lg">Experience</a>
+                <a href="#projects" class="nav-link text-lg">Projects</a>
+                <a href="#skills" class="nav-link text-lg">Skills</a>
+                <a href="#education" class="nav-link text-lg">Education</a>
+                <a href="#contact" class="nav-link text-lg">Contact</a>
             </div>
         </div>
-    </header>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg-pattern"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 fade-in">
+                    Dhairya Kandhari
+                </h1>
+                <div class="typing-wrapper mb-8">
+                    <p class="typing-text text-xl md:text-2xl text-accent-color">
+                        Software Developer | Computer Science Student
+                    </p>
+                </div>
+                <p class="text-lg md:text-xl mb-8 text-gray-400 fade-in" style="animation-delay: 0.5s;">
+                    Passionate about building scalable applications and solving complex problems
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center fade-in" style="animation-delay: 0.7s;">
+                    <a href="#contact" class="btn-primary">
+                        <i class="fas fa-envelope"></i>
+                        Get In Touch
+                    </a>
+                    <a href="Resume - Dhairya_Kandhari.pdf" class="btn-outline">
+                        <i class="fas fa-download"></i>
+                        Download Resume
+                    </a>
+                </div>
+                <div class="flex justify-center gap-6 mt-8 fade-in" style="animation-delay: 0.9s;">
+                    <a href="https://linkedin.com/in/dhairya-kandhari" class="text-gray-400 hover:text-accent-color transition">
+                        <i class="fab fa-linkedin text-2xl"></i>
+                    </a>
+                    <a href="https://github.com/dhairyak56" class="text-gray-400 hover:text-accent-color transition">
+                        <i class="fab fa-github text-2xl"></i>
+                    </a>
+                    <a href="mailto:dhairyakandhari18@gmail.com" class="text-gray-400 hover:text-accent-color transition">
+                        <i class="fas fa-envelope text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+            <a href="#about" class="text-gray-400 hover:text-accent-color transition">
+                <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
+            </a>
+        </div>
+    </section>
 
     <!-- About Section -->
-    <section id="about" class="py-16 bg-white">
+    <section id="about" class="py-20">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">About Me</h2>
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center">
-                    <div class="w-64 h-64 rounded-full overflow-hidden border-4 border-primary relative group">
-                        <!-- Add debug style to see the image -->
-                        <img src="public/images/pfp.png" alt="Dhairya Kandhari"
-                            class="w-full h-full object-cover transition duration-300 group-hover:scale-110"
-                            style="z-index: 10; position: relative;">
-                        <div
-                            class="absolute inset-0 bg-primary bg-opacity-0 group-hover:bg-opacity-20 transition duration-300 flex items-center justify-center">
-                            <span
-                                class="text-white opacity-0 group-hover:opacity-100 font-bold transition duration-300">Dhairya
-                                Kandhari</span>
+            <h2 class="text-4xl font-bold text-center mb-12">About Me</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-card p-8">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="md:w-1/3 flex justify-center">
+                            <img src="public/images/pfp.png" alt="Dhairya Kandhari" 
+                                 class="w-48 h-48 rounded-full object-cover border-4 border-accent-color">
                         </div>
-                    </div>
-                </div>
-                <div class="md:w-2/3 md:pl-12">
-                    <p class="text-lg text-gray-700 mb-6">
-                        I am a Computer Science student at the University of Adelaide with a passion for software
-                        development and problem-solving. With experience in web development, database management, and
-                        system optimization, I strive to create efficient and user-friendly applications.
-                    </p>
-                    <p class="text-lg text-gray-700 mb-6">
-                        My journey in technology began with a strong foundation in mathematics and a curiosity for
-                        programming, which evolved into a deep interest in software engineering. I enjoy taking on
-                        challenging projects that push my skills and allow me to grow as a developer.
-                    </p>
-                    <p class="text-lg text-gray-700 mb-6">
-                        In my free time, I enjoy badminton and finding innovative solutions to
-                         everyday challenges through technology.
-                    </p>
-                    <div class="mt-6">
-                        <a href="Resume - Dhairya_Kandhari.pdf"
-                            class="bg-primary text-white px-6 py-3 rounded-full font-bold inline-flex items-center hover:bg-blue-800 transition duration-300 transform hover:scale-105">
-                            <i class="fas fa-download mr-2"></i> Download Resume
-                        </a>
+                        <div class="md:w-2/3">
+                            <p class="text-lg mb-4 text-gray-300">
+                                I'm a Computer Science student at the University of Adelaide with a strong passion for software development. 
+                                Currently working as a Software Developer Intern at Teamgage, where I build scalable web applications 
+                                using C# .NET Core and optimize database performance.
+                            </p>
+                            <p class="text-lg mb-4 text-gray-300">
+                                My expertise spans full-stack development, with experience in JavaScript, Python, C++, and C#. 
+                                I enjoy tackling complex problems and creating efficient solutions that make a real impact.
+                            </p>
+                            <div class="flex flex-wrap gap-4 mt-6">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-map-marker-alt text-accent-color"></i>
+                                    <span class="text-gray-400">Adelaide, SA</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-graduation-cap text-accent-color"></i>
+                                    <span class="text-gray-400">GPA: 6.125/7.0</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-award text-accent-color"></i>
+                                    <span class="text-gray-400">Chancellor's Award: $48,000</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -572,224 +638,143 @@
     </section>
 
     <!-- Experience Section -->
-    <section id="experience" class="py-16 bg-gray-50">
+    <section id="experience" class="py-20 bg-secondary-color">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Work Experience</h2>
-            <div class="timeline-container">
+            <h2 class="text-4xl font-bold text-center mb-12">Work Experience</h2>
+            <div class="timeline max-w-6xl mx-auto">
+                
+                <!-- Teamgage -->
+                <div class="timeline-item timeline-left">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold text-accent-color mb-2">Software Developer Intern</h3>
+                        <p class="text-gray-400 mb-3">Teamgage | June 2025 - Present</p>
+                        <ul class="text-gray-300 space-y-2 text-sm">
+                            <li>• Implemented C# .NET Core Web API endpoints in Azure App Service with Entity Framework Core for real-time feedback features</li>
+                            <li>• Optimized SQL queries and database schemas in Azure SQL Database, improving data retrieval performance</li>
+                            <li>• Collaborated with frontend developers and QA engineers to resolve API and database issues</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- H2 Ventures -->
+                <div class="timeline-item timeline-right">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold text-accent-color mb-2">Venture Capital Intern</h3>
+                        <p class="text-gray-400 mb-3">H2 Ventures | Apr 2025 - May 2025</p>
+                        <ul class="text-gray-300 space-y-2 text-sm">
+                            <li>• Developed Flask-based dashboard to visualize key metrics for rapid startup comparisons</li>
+                            <li>• Automated financial data extraction with Python scripts, reducing manual prep time by 40%</li>
+                            <li>• Applied VC fundamentals including valuation methods and term sheet analysis</li>
+                        </ul>
+                    </div>
+                </div>
+
                 <!-- National College Australia -->
-                <div class="timeline-item timeline-left" data-aos="fade-right">
-                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
-                        <h3 class="text-xl font-bold text-primary">Software Engineer Intern</h3>
-                        <p class="text-gray-600 mb-2">National College Australia | Nov 2024 - Jan 2025</p>
-                        <ul class="text-gray-700 list-disc pl-5 space-y-2">
-                            <li>Implemented custom JavaScript components for Moodle's user interface that simplified course navigation, resulting in 15% 
-                                fewer support tickets and better student engagement metrics.</li>
-                            <li>Engineered a secure OAuth 2.0 authentication system connecting Moodle with the college's identity management platform, enabling 
-                                single sign-on functionality that reduced login time.</li>
-                            <li>Assisted in creating an automated grading system that reduced instructor marking time for multiple-choice assessments.</li>
+                <div class="timeline-item timeline-left">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-bold text-accent-color mb-2">Software Engineer Intern</h3>
+                        <p class="text-gray-400 mb-3">National College Australia | Nov 2024 - Jan 2025</p>
+                        <ul class="text-gray-300 space-y-2 text-sm">
+                            <li>• Improved Moodle UX with custom JavaScript components, reducing support tickets by 15%</li>
+                            <li>• Developed secure OAuth 2.0 authentication system and automated grading tool using Python</li>
+                            <li>• Enhanced system resilience and reduced instructor workload for assessments</li>
                         </ul>
                     </div>
                 </div>
-
-                <!-- Creart Digital Media -->
-                <div class="timeline-item timeline-right" data-aos="fade-left">
-                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
-                        <h3 class="text-xl font-bold text-primary">Software Engineer Intern</h3>
-                        <p class="text-gray-600 mb-2">Creart Digital Media | Mar 2024 - May 2024</p>
-                        <ul class="text-gray-700 list-disc pl-5 space-y-2">
-                            <li>Contributed to the development and optimization of MirrorXR AI in preparation for its 
-                                showcase at Adelaide Fringe, ensuring a seamless user experience</li>
-                            <li>Enhanced UI components on Webflow, implementing advanced animations and interactive elements 
-                                reducing page load times by 10% and increasing session duration</li>
-                            <li>Optimized text-to-speech AI for dynamic voice interactions,
-                                 enhancing accessibility and user immersion in XR experiences.</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Auz Training -->
-                <div class="timeline-item timeline-left" data-aos="fade-right">
-                    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
-                        <h3 class="text-xl font-bold text-primary">Information Technology Intern</h3>
-                        <p class="text-gray-600 mb-2">Auz Training | Oct 2023 - Dec 2023</p>
-                        <ul class="text-gray-700 list-disc pl-5 space-y-2">
-                            <li>Optimized database queries using version control (Git)
-                                 for systematic tracking and streamlined deployment workflows.</li>
-                            <li>Contributed to the development of automation scripts, reducing manual administrative 
-                                workload for IT operations by 12% and improving overall efficiency.</li>
-                        </ul>
-                    </div>
-                </div>
-    </section>
-    <!-- Projects Section -->
-    <section id="projects" class="py-16 bg-white">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Cause Connect -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md project-card">
-                    <div class="relative overflow-hidden h-48">
-                        <img src="public/images/Causeconnect.png" alt="Cause Connect"
-                            class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
-                        <div
-                            class="absolute inset-0 bg-primary bg-opacity-60 opacity-0 hover:opacity-100 flex items-center justify-center transition duration-300">
-                            <a href="https://github.com/dhairyak56/CauseConnect"
-                                class="bg-white text-primary px-4 py-2 rounded-full font-bold hover:bg-gray-100">View
-                                Details</a>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-xl font-bold text-primary">Cause Connect</h3>
-                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Jul - Nov
-                                2024</span>
-                        </div>
-                        <p class="text-gray-700 mb-4">Event management platform inspired by Eventbrite for
-                            community
-                            initiatives with user registration, event creation, and RSVP functionalities.
-                        </p>
-                        <div class="mb-4 flex flex-wrap">
-                            <span class="skill-tag">Vue.js</span>
-                            <span class="skill-tag">Node.js</span>
-                            <span class="skill-tag">API Integration</span>
-                        </div>
-                        <a href="https://github.com/dhairyak56/CauseConnect"
-                            class="text-primary font-semibold hover:underline inline-flex items-center">
-                            View Project <i
-                                class="fas fa-arrow-right ml-1 transition-transform duration-300 transform group-hover:translate-x-1"></i>
-                        </a>
-                    </div>
-                </div>
-                <!-- Student query AI -->
-
-                <div class="bg-white rounded-lg overflow-hidden shadow-md project-card">
-                    <div class="relative overflow-hidden h-48">
-                        <img src="public/images/Chatbot.jpg" alt="AI Student Query Assitant"
-                            class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
-                        <div
-                            class="absolute inset-0 bg-primary bg-opacity-60 opacity-0 hover:opacity-100 flex items-center justify-center transition duration-300">
-                            <a href="https://github.com/dhairyak56/ai-student-query-assistant"
-                                class="bg-white text-primary px-4 py-2 rounded-full font-bold hover:bg-gray-100">View
-                                Details</a>
-                        </div>
-                    </div>
-
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-xl font-bold text-primary">AI Student Query Assistant</h3>
-                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">May - June
-                                2024</span>
-                        </div>
-                        <p class="text-gray-700 mb-4">A desktop application to provide instant
-                            AI-powered responses to student queries. Built with Tkinter,
-                            it features a user-friendly chat interface and local caching for faster responses, enhancing
-                            independent learning..</p>
-                        <div class="mb-4 flex flex-wrap">
-                            <span class="skill-tag">Tkinter</span>
-                            <span class="skill-tag">Machine Learning</span>
-                            <span class="skill-tag">API</span>
-                        </div>
-                        <a href="https://github.com/dhairyak56/ai-student-query-assistant"
-                            class="text-primary font-semibold hover:underline inline-flex items-center">
-                            View Project <i
-                                class="fas fa-arrow-right ml-1 transition-transform duration-300 transform group-hover:translate-x-1"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Auto Pilot Purchase -->
-                <div class="bg-white rounded-lg overflow-hidden shadow-md project-card">
-                    <div class="relative overflow-hidden h-48">
-                        <img src="public/images/autopilot.png" alt="Auto Pilot Purchase"
-                            class="w-full h-full object-cover transform hover:scale-110 transition duration-500">
-                        <div
-                            class="absolute inset-0 bg-primary bg-opacity-60 opacity-0 hover:opacity-100 flex items-center justify-center transition duration-300">
-                            <a href="https://github.com/dhairyak56/Auto-Pilot-Purchase"
-                                class="bg-white text-primary px-4 py-2 rounded-full font-bold hover:bg-gray-100">View
-                                Details</a>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-3">
-                            <h3 class="text-xl font-bold text-primary">Auto Pilot Purchase</h3>
-                            <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Aug - Nov
-                                2023</span>
-                        </div>
-                        <p class="text-gray-700 mb-4">CLI application to streamline car buying process with
-                            secure
-                            management of listings, user data, and transaction history.</p>
-                        <div class="mb-4 flex flex-wrap">
-                            <span class="skill-tag">C++</span>
-                            <span class="skill-tag">CLI</span>
-                            <span class="skill-tag">Data Management</span>
-                        </div>
-                        <a href="https://github.com/dhairyak56/Auto-Pilot-Purchase"
-                            class="text-primary font-semibold hover:underline inline-flex items-center">
-                            View Project <i
-                                class="fas fa-arrow-right ml-1 transition-transform duration-300 transform group-hover:translate-x-1"></i>
-                        </a>
-                    </div>
-                </div>
-
-
             </div>
         </div>
     </section>
 
-    <!-- Education Section -->
-    <section id="education" class="py-16 bg-gray-50">
+    <!-- Projects Section -->
+    <section id="projects" class="py-20">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Education</h2>
-            <div class="max-w-4xl mx-auto">
-                <!-- University of Adelaide -->
-                <div class="bg-white p-6 rounded-lg shadow-md mb-8 hover:shadow-xl transition duration-300">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <div>
-                            <h3 class="text-xl font-bold text-primary">The University of Adelaide</h3>
-                            <p class="text-gray-600">Bachelor of Computer Science</p>
+            <h2 class="text-4xl font-bold text-center mb-12">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                
+                <!-- Finance Tracker -->
+                <div class="project-card glass-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="public/images/finance.jpeg" alt="Finance Tracker" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay">
+                            <h3 class="text-xl font-bold mb-2">Finance Tracker</h3>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/dhairyak56/finance-tracker" class="btn-primary text-sm py-2 px-4">
+                                    <i class="fab fa-github"></i> View Code
+                                </a>
+                            </div>
                         </div>
-                        <span class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mt-2 md:mt-0">2023
-                            -
-                            2025</span>
                     </div>
-                    <div class="mb-4">
-                        <p class="font-semibold text-gray-800">Relevant Coursework:</p>
-                        <p class="text-gray-700">Object Oriented Programming, Algorithm Design and Data
-                            Structures, Web
-                            and Database Computing</p>
-                    </div>
-                    <div>
-                        <p class="font-semibold text-gray-800">Achievements:</p>
-                        <ul class="text-gray-700 list-disc pl-5 space-y-1">
-                            <li>Chancellor's Award: AUD 48,000</li>
-                            <li>Sports: Competitive Badminton Player (University Team)</li>
-                            <li>PASS Leader for STATS 1000 (Feb 2024 - June 2024)</li>
-                        </ul>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold">Finance Tracker</h3>
+                            <span class="text-xs text-gray-400">Mar - May 2025</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">Full-stack finance management app with AI-powered insights</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">Python Flask</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- The Millennium School -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <div>
-                            <h3 class="text-xl font-bold text-primary">The Millennium School Amritsar</h3>
-                            <p class="text-gray-600">Year 11 and 12</p>
+                <!-- Cause Connect -->
+                <div class="project-card glass-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="public/images/Causeconnect.png" alt="Cause Connect" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay">
+                            <h3 class="text-xl font-bold mb-2">Cause Connect</h3>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/dhairyak56/CauseConnect" class="btn-primary text-sm py-2 px-4">
+                                    <i class="fab fa-github"></i> View Code
+                                </a>
+                            </div>
                         </div>
-                        <span class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mt-2 md:mt-0">2021
-                            -
-                            2022</span>
                     </div>
-                    <div class="mb-4">
-                        <p class="font-semibold text-gray-800">Achievements:</p>
-                        <ul class="text-gray-700 list-disc pl-5 space-y-1">
-                            <li>100% scholarship</li>
-                            <li>National Mathematics Tournament (2021)</li>
-                            <li>Head Boy (2022)</li>
-                        </ul>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold">Cause Connect</h3>
+                            <span class="text-xs text-gray-400">Sept - Nov 2024</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">Platform for connecting volunteers with nonprofit organizations</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">Express</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">OAuth</span>
+                        </div>
                     </div>
-                    <div>
-                        <p class="font-semibold text-gray-800">Activities:</p>
-                        <p class="text-gray-700">Badminton (State-level), Debating, Cricket, Drama</p>
+                </div>
+
+                <!-- AI Student Query Assistant -->
+                <div class="project-card glass-card">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="public/images/Chatbot.jpg" alt="AI Student Query Assistant" 
+                             class="w-full h-full object-cover">
+                        <div class="project-overlay">
+                            <h3 class="text-xl font-bold mb-2">AI Student Query Assistant</h3>
+                            <div class="flex gap-2">
+                                <a href="https://github.com/dhairyak56/ai-student-query-assistant" class="btn-primary text-sm py-2 px-4">
+                                    <i class="fab fa-github"></i> View Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xl font-bold">AI Student Assistant</h3>
+                            <span class="text-xs text-gray-400">Jul - Aug 2024</span>
+                        </div>
+                        <p class="text-gray-300 mb-4">AI-powered tool for answering student queries using course materials</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Tkinter</span>
+                            <span class="skill-tag">OpenAI API</span>
+                            <span class="skill-tag">PyPDF2</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -797,202 +782,364 @@
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="py-16 bg-white">
+    <section id="skills" class="py-20 bg-secondary-color">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Skills</h2>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <!-- Technical Skills -->
-                <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
-                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center">
-                        <i class="fas fa-code mr-2"></i> Technical Skills
+            <h2 class="text-4xl font-bold text-center mb-12">Skills & Technologies</h2>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Programming Languages -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-code text-accent-color"></i>
+                        Programming Languages
                     </h3>
-                    <div class="flex flex-wrap">
-                        <span class="skill-tag">C++</span>
-                        <span class="skill-tag">JavaScript</span>
+                    <div class="flex flex-wrap gap-2">
                         <span class="skill-tag">Python</span>
-                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">C#</span>
                         <span class="skill-tag">R</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">HTML/CSS</span>
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Firebase</span>
-                        <span class="skill-tag">Algorithmic Optimization</span>
-                        <span class="skill-tag">Bash Scripting</span>
-                    </div>
-                </div>
-                <!-- Research Skills -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center">
-                        <i class="fas fa-chart-line mr-2"></i> Research Skills
-                    </h3>
-                    <div class="flex flex-wrap">
-                        <span class="skill-tag">Analytical Thinking</span>
-                        <span class="skill-tag">Scientific Report Writing</span>
-                        <span class="skill-tag">Data Analysis</span>
-                        <span class="skill-tag">Statistical Modeling</span>
-                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">SQL</span>
                     </div>
                 </div>
 
-                <!-- Soft Skills -->
-                <div class="bg-white p-6 rounded-lg shadow-md">
-                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center">
-                        <i class="fas fa-users mr-2"></i> Soft Skills
+                <!-- Frameworks & Tools -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-tools text-accent-color"></i>
+                        Frameworks & Tools
                     </h3>
-                    <div class="flex flex-wrap">
-                        <span class="skill-tag">Problem Solving</span>
-                        <span class="skill-tag">Time Management</span>
-                        <span class="skill-tag">Teamwork</span>
-                        <span class="skill-tag">Attention to Detail</span>
-                        <span class="skill-tag">Emotional Intelligence</span>
-                        <span class="skill-tag">Leadership</span>
-                        <span class="skill-tag">Communication</span>
-                        <span class="skill-tag">Critical Thinking</span>
-                        <span class="skill-tag">Adaptability</span>
-                        <span class="skill-tag">Public Speaking</span>
-                        <span class="skill-tag">Conflict Resolution</span>
-                        <span class="skill-tag">Decision Making</span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Express</span>
+                        <span class="skill-tag">.NET Core</span>
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Docker</span>
+                    </div>
+                </div>
+
+                <!-- Database & Cloud -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-database text-accent-color"></i>
+                        Database & Cloud
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">Azure SQL</span>
+                        <span class="skill-tag">Entity Framework</span>
+                        <span class="skill-tag">Azure App Service</span>
+                    </div>
+                </div>
+
+                <!-- Other Skills -->
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-chart-line text-accent-color"></i>
+                        Data & Analytics
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">Scikit-learn</span>
+                        <span class="skill-tag">Prophet</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-16 bg-gray-50">
+    <!-- Education Section -->
+    <section id="education" class="py-20">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Get In Touch</h2>
-            <div class="flex flex-col md:flex-row max-w-5xl mx-auto">
-                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
-                    <div class="bg-white p-6 rounded-lg shadow-md h-full">
-                        <h3 class="text-xl font-bold text-primary mb-6">Contact Information</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-envelope text-primary"></i>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Email</p>
-                                    <p class="text-gray-700">dhairyakandhari18@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-phone text-primary"></i>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Phone</p>
-                                    <p class="text-gray-700">(+61) 467 296 623</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-blue-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-map-marker-alt text-primary"></i>
-                                </div>
-                                <div>
-                                    <p class="font-semibold text-gray-800">Location</p>
-                                    <p class="text-gray-700">Holden Hill, SA, 5088</p>
-                                </div>
-                            </div>
+            <h2 class="text-4xl font-bold text-center mb-12">Education</h2>
+            <div class="max-w-4xl mx-auto space-y-8">
+                
+                <!-- University of Adelaide -->
+                <div class="glass-card p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-accent-color">The University of Adelaide</h3>
+                            <p class="text-gray-300">Bachelor of Computer Science</p>
                         </div>
-                        <div class="mt-8">
-                            <h4 class="font-semibold text-gray-800 mb-4">Connect With Me</h4>
-                            <div class="flex space-x-4">
-                                <a href="https://www.linkedin.com/in/dhairya-kandhari/"
-                                    class="bg-blue-100 p-3 rounded-full text-primary hover:bg-blue-200 transition duration-300">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="https://github.com/dhairyak56"
-                                    class="bg-blue-100 p-3 rounded-full text-primary hover:bg-blue-200 transition duration-300">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#"
-                                    class="bg-blue-100 p-3 rounded-full text-primary hover:bg-blue-200 transition duration-300">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                            </div>
+                        <span class="text-sm text-gray-400 mt-2 md:mt-0">Feb 2023 - Nov 2025</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="font-semibold mb-2">Relevant Coursework:</p>
+                            <p class="text-gray-300 text-sm">Object Oriented Programming, Algorithm Design & Data Structures, Web & Database Computing, Business Valuations, Corporate Finance, Entrepreneurship</p>
+                        </div>
+                        <div>
+                            <p class="font-semibold mb-2">Achievements:</p>
+                            <ul class="text-gray-300 text-sm space-y-1">
+                                <li>• GPA: 6.125/7.0</li>
+                                <li>• Chancellor's Award: AUD 48,000</li>
+                                <li>• PASS Leader for Peer Assisted Study Sessions</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="md:w-1/2">
-                    <div class="bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-bold text-primary mb-6">Send Me a Message</h3>
-                        <form action="https://formspree.io/f/xgvaweep" method="POST">
-                            <div class="mb-4">
-                                <label for="name" class="block text-gray-700 font-medium mb-2">Your
-                                    Name</label>
-                                <input type="text" name="name" id="name"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    required>
+
+                <!-- The Millennium School -->
+                <div class="glass-card p-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-accent-color">The Millennium School Amritsar</h3>
+                            <p class="text-gray-300">Year 11 and 12</p>
+                        </div>
+                        <span class="text-sm text-gray-400 mt-2 md:mt-0">2021 - 2022</span>
+                    </div>
+                    <ul class="text-gray-300 text-sm space-y-1">
+                        <li>• 100% Scholarship</li>
+                        <li>• National Mathematics Tournament (2021)</li>
+                        <li>• Head Boy (2022)</li>
+                        <li>• Activities: Badminton (State-level), Debating, Cricket, Drama</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Involvement Section -->
+    <section id="community" class="py-20 bg-secondary-color">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Community Involvement</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                
+                <div class="glass-card p-6 text-center">
+                    <i class="fas fa-university text-accent-color text-3xl mb-4"></i>
+                    <h3 class="font-bold mb-2">SET Ambassador</h3>
+                    <p class="text-gray-400 text-sm">Faculty of Sciences, Engineering & Technology</p>
+                    <p class="text-gray-500 text-xs mt-2">Jul - Nov 2024</p>
+                </div>
+
+                <div class="glass-card p-6 text-center">
+                    <i class="fas fa-share-alt text-accent-color text-3xl mb-4"></i>
+                    <h3 class="font-bold mb-2">Social Media Lead</h3>
+                    <p class="text-gray-400 text-sm">Adelaide University Computer Science Society</p>
+                    <p class="text-gray-500 text-xs mt-2">Mar - Jun 2024</p>
+                </div>
+
+                <div class="glass-card p-6 text-center">
+                    <i class="fas fa-handshake text-accent-color text-3xl mb-4"></i>
+                    <h3 class="font-bold mb-2">Head of Sponsorships</h3>
+                    <p class="text-gray-400 text-sm">Adelaide University Asset Management Society</p>
+                    <p class="text-gray-500 text-xs mt-2">Sept 2023 - May 2024</p>
+                </div>
+
+                <div class="glass-card p-6 text-center">
+                    <i class="fas fa-rocket text-accent-color text-3xl mb-4"></i>
+                    <h3 class="font-bold mb-2">Secretary</h3>
+                    <p class="text-gray-400 text-sm">Adelaide University Entrepreneur Club</p>
+                    <p class="text-gray-500 text-xs mt-2">Mar - Jul 2023</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">Get In Touch</h2>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Contact Info -->
+                <div class="glass-card p-8">
+                    <h3 class="text-xl font-bold mb-6">Contact Information</h3>
+                    <div class="space-y-4">
+                        <a href="mailto:dhairyakandhari18@gmail.com" class="flex items-center gap-4 text-gray-300 hover:text-accent-color transition">
+                            <div class="w-12 h-12 bg-accent-color bg-opacity-20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-envelope text-accent-color"></i>
                             </div>
-                            <div class="mb-4">
-                                <label for="email" class="block text-gray-700 font-medium mb-2">Your
-                                    Email</label>
-                                <input type="email" name="email" id="email"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    required>
+                            <div>
+                                <p class="font-semibold">Email</p>
+                                <p class="text-sm">dhairyakandhari18@gmail.com</p>
                             </div>
-                            <div class="mb-4">
-                                <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
-                                <input type="text" name="subject" id="subject"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    required>
+                        </a>
+                        
+                        <a href="tel:+61467296623" class="flex items-center gap-4 text-gray-300 hover:text-accent-color transition">
+                            <div class="w-12 h-12 bg-accent-color bg-opacity-20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-phone text-accent-color"></i>
                             </div>
-                            <div class="mb-6">
-                                <label for="message" class="block text-gray-700 font-medium mb-2">Message</label>
-                                <textarea name="message" id="message" rows="4"
-                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    required></textarea>
+                            <div>
+                                <p class="font-semibold">Phone</p>
+                                <p class="text-sm">(+61) 467 296 623</p>
                             </div>
-                            <button type="submit"
-                                class="w-full bg-primary text-white py-3 px-6 rounded-lg font-bold hover:bg-blue-800 transition duration-300">Send
-                                Message</button>
-                        </form>
+                        </a>
+                        
+                        <div class="flex items-center gap-4 text-gray-300">
+                            <div class="w-12 h-12 bg-accent-color bg-opacity-20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-map-marker-alt text-accent-color"></i>
+                            </div>
+                            <div>
+                                <p class="font-semibold">Location</p>
+                                <p class="text-sm">Holden Hill, SA 5088</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="font-semibold mb-4">Connect With Me</h4>
+                        <div class="flex gap-4">
+                            <a href="https://linkedin.com/in/dhairya-kandhari" 
+                               class="w-12 h-12 bg-accent-color bg-opacity-20 rounded-full flex items-center justify-center text-accent-color hover:bg-accent-color hover:text-white transition">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com/dhairyak56" 
+                               class="w-12 h-12 bg-accent-color bg-opacity-20 rounded-full flex items-center justify-center text-accent-color hover:bg-accent-color hover:text-white transition">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://dhairyakandhari.com" 
+                               class="w-12 h-12 bg-accent-color bg-opacity-20 rounded-full flex items-center justify-center text-accent-color hover:bg-accent-color hover:text-white transition">
+                                <i class="fas fa-globe"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
-</body>
-<script>
-    // Add this script at the end of your body section
 
-    // Fix for mobile menu toggle
-    document.addEventListener('DOMContentLoaded', function () {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
+                <!-- Contact Form -->
+                <div class="glass-card p-8">
+                    <h3 class="text-xl font-bold mb-6">Send Me a Message</h3>
+                    <form action="https://formspree.io/f/xgvaweep" method="POST">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-300 mb-2">Your Name</label>
+                            <input type="text" name="name" id="name" required
+                                   class="form-input">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-300 mb-2">Your Email</label>
+                            <input type="email" name="email" id="email" required
+                                   class="form-input">
+                        </div>
+                        <div class="mb-4">
+                            <label for="subject" class="block text-gray-300 mb-2">Subject</label>
+                            <input type="text" name="subject" id="subject" required
+                                   class="form-input">
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-300 mb-2">Message</label>
+                            <textarea name="message" id="message" rows="4" required
+                                      class="form-input"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full">
+                            Send Message
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // Toggle mobile menu
-        mobileMenuButton.addEventListener('click', function () {
-            if (mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.remove('hidden');
+    <!-- Footer -->
+    <footer class="py-8 border-t border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-400">
+                © 2025 Dhairya Kandhari. Built with passion and code.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('.nav-wrapper');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
             } else {
-                mobileMenu.classList.add('hidden');
+                nav.classList.remove('scrolled');
             }
         });
 
-        // Close mobile menu when clicking menu items
-        const mobileMenuItems = mobileMenu.querySelectorAll('a');
-        mobileMenuItems.forEach(item => {
-            item.addEventListener('click', function () {
-                mobileMenu.classList.add('hidden');
+        // Mobile menu functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuOverlay = document.getElementById('menu-overlay');
+        const closeMenuBtn = document.getElementById('close-menu');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        closeMenuBtn.addEventListener('click', toggleMobileMenu);
+        menuOverlay.addEventListener('click', toggleMobileMenu);
+
+        // Close mobile menu when clicking on links
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', toggleMobileMenu);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
         });
 
-        // Fix for dark mode toggle
-        const darkModeToggle = document.getElementById('darkModeToggle');
-        darkModeToggle.addEventListener('click', function () {
-            document.body.classList.toggle('dark-mode');
+        // Typing animation restart
+        const typingText = document.querySelector('.typing-text');
+        setInterval(() => {
+            typingText.style.animation = 'none';
+            setTimeout(() => {
+                typingText.style.animation = 'typing 3s steps(40) 1s 1 normal both, blink 900ms steps(40) infinite normal';
+            }, 100);
+        }, 8000);
 
-            // Toggle icon
-            const icon = darkModeToggle.querySelector('i');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all glass-cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
         });
-    });
 
-</script>
+        // Add hover effect to project cards
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.querySelector('img').style.transform = 'scale(1.1)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.querySelector('img').style.transform = 'scale(1)';
+            });
+        });
+
+        // Form submission handling
+        const contactForm = document.querySelector('form');
+        contactForm.addEventListener('submit', function(e) {
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin"></i>';
+            submitBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>
